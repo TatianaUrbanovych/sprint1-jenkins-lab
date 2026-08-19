@@ -11,22 +11,22 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'cd starter && mvn -B clean package'
+                sh 'cd sprint1-jenkins-lab && mvn -B clean package'
             }
         }
         stage('Test') {
             steps {
-                sh 'cd starter && mvn -B test'
+                sh 'cd sprint1-jenkins-lab && mvn -B test'
             }
             post {
                 always {
-                    junit 'starter/target/test-reports/*.xml'
+                    junit 'sprint1-jenkins-lab/target/test-reports/*.xml'
                 }
             }
         }
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'starter/target/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'sprint1-jenkins-lab/target/*.jar', fingerprint: true
             }
         }
     }
