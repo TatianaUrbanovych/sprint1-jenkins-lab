@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven 3.6.3'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -8,22 +11,22 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'mvn -B clean package'
+                sh 'cd starter && mvn -B clean package'
             }
         }
         stage('Test') {
             steps {
-                sh 'mvn -B test'
+                sh 'cd starter && mvn -B test'
             }
             post {
                 always {
-                    junit 'target/test-reports/*.xml'
+                    junit 'starter/target/test-reports/*.xml'
                 }
             }
         }
         stage('Archive') {
             steps {
-                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+                archiveArtifacts artifacts: 'starter/target/*.jar', fingerprint: true
             }
         }
     }
